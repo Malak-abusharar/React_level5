@@ -1,6 +1,6 @@
 import "./Home.css";
 import React from "react";
-import { Typography,Button, Stack } from "@mui/material";
+import { Typography, Button, Stack } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
@@ -22,7 +22,7 @@ const Home = () => {
             <CardMedia
               component="img"
               height="194"
-              image=  "https://images.pexels.com/photos/18488300/pexels-photo-18488300.jpeg?auto=compress&cs=tinysrgb&w=800"
+              image="https://images.pexels.com/photos/18488300/pexels-photo-18488300.jpeg?auto=compress&cs=tinysrgb&w=800"
               alt="Paella dish"
             />
             <CardContent>

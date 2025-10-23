@@ -1,31 +1,46 @@
+import Home from "pages/home/Home";
+import Root from "./pages/Root";
 import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
   RouterProvider,
 } from "react-router-dom";
-import Root from "./pages/Root.jsx";
-import Home from "./pages/home/Home.jsx";
-import Create from "./pages/Cart/Cart.jsx";
-import NotFound from "NotFound.jsx";
+import Cart from "pages/Cart/Cart";
+import NotFound from "NotFound";
+ 
+
+
+
 
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Root />}>
       <Route index element={<Home />} />
-      <Route path="create" element={<Create />} />
+      <Route path="cart" element={<Cart />} />
+
+
       <Route path="*" element={<NotFound />} />
 
+     
     </Route>
   )
 );
 
+
+
+
+
 function App() {
 
-  return(
-    
-     <RouterProvider router={router} />
+
+
+  return (
+  
+      
+      <RouterProvider router={router} />
+   
   );
 }
 
