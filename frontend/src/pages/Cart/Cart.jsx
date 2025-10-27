@@ -11,7 +11,9 @@ import {
 } from "@mui/material";
 import "./Cart.css";
 import { Add, Delete, Remove } from "@mui/icons-material";
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { descreaseQuantity, increaseQuantity, deleteProduct } from "../../Redux/cartSlice";
+
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -23,6 +25,8 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 const Cart = () => {
     // @ts-ignore
     const {selectedProducts} = useSelector((state) => state.carttt)
+      const dispatch = useDispatch()
+
 console.log(selectedProducts)
   return (
     <Box>
@@ -38,13 +42,13 @@ console.log(selectedProducts)
         </div>
 
         <div style={{ display: "flex", alignItems: "center" }}>
-          <IconButton sx={{ color: "#1976d2", ml: "10px" }} onClick={() => {}}>
+          <IconButton sx={{ color: "#1976d2", ml: "10px" }} onClick={() => {dispatch(increaseQuantity(item))}}>
             <Add />
           </IconButton>
 
           <StyledBadge badgeContent={1} color="secondary" />
 
-          <IconButton sx={{ color: "#1976d2", mr: "10px" }} onClick={() => {}}>
+          <IconButton sx={{ color: "#1976d2", mr: "10px" }} onClick={() => {dispatch(descreaseQuantity(item))}}>
             <Remove />
           </IconButton>
         </div>
@@ -55,13 +59,14 @@ console.log(selectedProducts)
           sx={{ display: { xs: "none", md: "inline-flex" } }}
           variant="text"
           color="error"
+          onClick={() => {dispatch(deleteProduct(item))}}
         >
           delete
         </Button>
 
         <IconButton
           sx={{ color: "#ef5350", display: { xs: "inline-flex", md: "none" } }}
-          onClick={() => {}}
+          onClick={() => {dispatch(deleteProduct(item))}}
         >
           <Delete />
         </IconButton>

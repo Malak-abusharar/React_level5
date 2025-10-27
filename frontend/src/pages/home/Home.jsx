@@ -7,7 +7,11 @@ import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import { useGetproductsByNameQuery} from '../../Redux/productsApi';
+import { useDispatch } from 'react-redux'
+import { addToCart } from "../../Redux/cartSlice";
+
 const Home = () => {
+  const dispatch = useDispatch()
   const theme = useTheme();
   const { data, error, isLoading } = useGetproductsByNameQuery('bulbasaur')
   if(isLoading){
@@ -25,7 +29,7 @@ const Home = () => {
     >
       {data.map((item) => {
         return (
-          <Card className="card" sx={{ maxWidth: 277, mb: 6, mx: 2 }}>
+          <Card key={item.id} className="card" sx={{ maxWidth: 277, mb: 6, mx: 2 }}>
             <CardMedia
               component="img"
               height="277"
@@ -45,6 +49,7 @@ const Home = () => {
                 sx={{ textTransform: "capitalize", p: 1, lineHeight: 1.1 }}
                 variant="contained"
                 color="primary"
+                onClick={() => dispatch(addToCart(item))}
               >
                 Add to cart
               </Button>
