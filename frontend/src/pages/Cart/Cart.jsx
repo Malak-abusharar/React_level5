@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import "./Cart.css";
 import { Add, Delete, Remove } from "@mui/icons-material";
+import { useSelector } from 'react-redux'
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -20,15 +21,20 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 }));
 
 const Cart = () => {
+    // @ts-ignore
+    const {selectedProducts} = useSelector((state) => state.carttt)
+console.log(selectedProducts)
   return (
     <Box>
-      <Paper dir="rtl" className="item-container">
+    {selectedProducts.map((item) => {
+      return(
+          <Paper key={item.id} dir="rtl" className="item-container">
         <div className="img-title-parent">
           <img
-            src="https://images.pexels.com/photos/18488300/pexels-photo-18488300.jpeg?auto=compress&cs=tinysrgb&w=800"
+            src={item.imageLink}
             alt=""
           />
-          <p className="product-name">T-shirt</p>
+          <p className="product-name">{item.productName}</p>
         </div>
 
         <div style={{ display: "flex", alignItems: "center" }}>
@@ -43,7 +49,7 @@ const Cart = () => {
           </IconButton>
         </div>
 
-        <div className="price">$100</div>
+        <div className="price">{item.price}</div>
 
         <Button
           sx={{ display: { xs: "none", md: "inline-flex" } }}
@@ -60,6 +66,9 @@ const Cart = () => {
           <Delete />
         </IconButton>
       </Paper>
+      )
+    }
+    )}
 
       <Paper sx={{ width: "200px", mx: "auto", mt: "60px" }}>
         <Typography align="center" p={2} variant="h6">
