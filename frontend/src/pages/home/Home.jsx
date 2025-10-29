@@ -1,73 +1,122 @@
 import "./Home.css";
 import React from "react";
-import { Typography, Button, Stack, Box, CircularProgress } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
+import {
+  Typography,
+  Button,
+  Stack,
+  Box,
+  CircularProgress,
+  IconButton,
+  Badge,
+} from "@mui/material";
+import { styled, useTheme } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
-import { useGetproductsByNameQuery} from '../../Redux/productsApi';
-import { useDispatch } from 'react-redux'
-import { addToCart } from "../../Redux/cartSlice";
+import { useGetproductsByNameQuery } from "../../Redux/productsApi";
+import { useDispatch } from "react-redux";
+import {
+  addToCart,
+  descreaseQuantity,
+  increaseQuantity,
+} from "../../Redux/cartSlice";
+import { Add, Remove } from "@mui/icons-material";
 
+const StyledBadge = styled(Badge)(({ theme }) => ({
+  "& .MuiBadge-badge": {
+  },
+}));
 const Home = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const theme = useTheme();
-  const { data, error, isLoading } = useGetproductsByNameQuery('bulbasaur')
-  if(isLoading){
-    return(
-          <Box sx={{ display: 'flex' }}>
-      <CircularProgress />
-    </Box>
-    )
+  const { data, error, isLoading } = useGetproductsByNameQuery("bulbasaur");
+  if (isLoading) {
+    return (
+      <Box sx={{ display: "flex" }}>
+        <CircularProgress />
+      </Box>
+    );
   }
-  if(data){
-  return (
-    <Stack
-      direction={"row"}
-      sx={{ flexWrap: "wrap", justifyContent: "center" }}
-    >
-      {data.map((item) => {
-        return (
-          <Card key={item.id} className="card" sx={{ maxWidth: 277, mb: 6, mx: 2 }}>
-            <CardMedia
-              component="img"
-              height="277"
-              image={item.imageLink}
-              alt="Paella dish"
-            />
-            <CardContent>
-              <Typography variant="body2" color="text.secondary">
-              {item.description}
-              </Typography>
-            </CardContent>
-            <CardActions
-              sx={{ justifyContent: "space-between" }}
-              disableSpacing
+  if (data) {
+    return (
+      <Stack
+        direction={"row"}
+        sx={{ flexWrap: "wrap", justifyContent: "center" }}
+      >
+        {data.map((item) => {
+          return (
+            <Card
+              key={item.id}
+              className="card"
+              sx={{ maxWidth: 277, mb: 6, mx: 2 }}
             >
-              <Button
-                sx={{ textTransform: "capitalize", p: 1, lineHeight: 1.1 }}
-                variant="contained"
-                color="primary"
-                onClick={() => dispatch(addToCart(item))}
+              <CardMedia
+                component="img"
+                height="277"
+                image={item.imageLink}
+                alt="Paella dish"
+              />
+              <CardContent>
+                <Typography variant="body2" color="text.secondary">
+                  {item.description}
+                </Typography>
+              </CardContent>
+              <CardActions
+                sx={{ justifyContent: "space-between" }}
+                disableSpacing
               >
-                Add to cart
-              </Button>
+                {true ? (
+                  <div dir="rtl" style={{ display: "flex", alignItems: "center" }}>
+                    <IconButton
+                    color="primary"
+                      sx={{ ml: "10px" }}
+                      onClick={() => {
+                        dispatch(increaseQuantity(item));
+                      }}
+                    >
+                      <Add fontSize="small"/>
+                    </IconButton>
 
-              <Typography
-                mr={1}
-                variant="body1"
-                color={theme.palette.error.light}
-              >
-                ${item.price}
-              </Typography>
-            </CardActions>
-          </Card>
-        );
-      })}
-    </Stack>
-  );
+                    <StyledBadge
+                      badgeContent={1}
+                      color="primary"
+                    />
 
+                    <IconButton
+                    color="primary"
+                      sx={{ mr: "10px" }}
+                      onClick={() => {
+                        dispatch(descreaseQuantity(item));
+                      }}
+                    >
+                      <Remove fontSize="small"/>
+                    </IconButton>
+                  </div>
+                ) : (
+                  <Button
+                    sx={{ textTransform: "capitalize", p: 1, lineHeight: 1.1 }}
+                    variant="contained"
+                    color="primary"
+                    onClick={() => dispatch(addToCart(item))}
+                  >
+                    Add to cart
+                  </Button>
+                )}
+
+                <Typography
+                  mr={1}
+                  variant="body1"
+                  color={theme.palette.error.light}
+                >
+                  ${item.price}
+                </Typography>
+              </CardActions>
+            </Card>
+          );
+        })}
+      </Stack>
+    );
   }
 };
 
