@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 //use "useSelector" to get the array
 const initialState = {
   selectedProducts: [],
-  selectedProductsID: [],
+  selectedProductsID: [1, 2],
 };
 
 export const counterSlice = createSlice({
@@ -15,8 +15,7 @@ export const counterSlice = createSlice({
       state.selectedProducts.push(productWithQuantity);
       console.log("done");
       //action.payload = proudect from API
-      state.selectedProductsID.push(action.payload.id)
-
+      state.selectedProductsID.push(action.payload.id);
     },
     increaseQuantity: (state, action) => {
       const increaseProduct = state.selectedProducts.find((item) => {
@@ -33,7 +32,11 @@ export const counterSlice = createSlice({
         const newArray = state.selectedProducts.filter((item) => {
           return item.id !== action.payload.id;
         });
+        const newArray2 = state.selectedProductsID.filter((item) => {
+          return item !== action.payload.id;
+        });
         state.selectedProducts = newArray;
+        state.selectedProductsID = newArray2;
       }
     },
     deleteProduct: (state, action) => {
