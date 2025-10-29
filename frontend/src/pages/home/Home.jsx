@@ -15,7 +15,7 @@ import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import { useGetproductsByNameQuery } from "../../Redux/productsApi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   addToCart,
   descreaseQuantity,
@@ -24,12 +24,14 @@ import {
 import { Add, Remove } from "@mui/icons-material";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
-  "& .MuiBadge-badge": {
-  },
+  "& .MuiBadge-badge": {},
 }));
 const Home = () => {
   const dispatch = useDispatch();
   const theme = useTheme();
+  // @ts-ignore
+  const { selectedProducts,selectedProductsID } = useSelector((state) => state.carttt);
+
   const { data, error, isLoading } = useGetproductsByNameQuery("bulbasaur");
   if (isLoading) {
     return (
@@ -44,7 +46,7 @@ const Home = () => {
         direction={"row"}
         sx={{ flexWrap: "wrap", justifyContent: "center" }}
       >
-        {data.map((item) => {
+        {data.map((item, index) => {
           return (
             <Card
               key={item.id}
@@ -66,31 +68,31 @@ const Home = () => {
                 sx={{ justifyContent: "space-between" }}
                 disableSpacing
               >
-                {true ? (
-                  <div dir="rtl" style={{ display: "flex", alignItems: "center" }}>
+                {selectedProductsID.includes(item.id)? (
+                  <div
+                    dir="rtl"
+                    style={{ display: "flex", alignItems: "center" }}
+                  >
                     <IconButton
-                    color="primary"
+                      color="primary"
                       sx={{ ml: "10px" }}
                       onClick={() => {
                         dispatch(increaseQuantity(item));
                       }}
                     >
-                      <Add fontSize="small"/>
+                      <Add fontSize="small" />
                     </IconButton>
 
-                    <StyledBadge
-                      badgeContent={1}
-                      color="primary"
-                    />
+                    <StyledBadge badgeContent={selectedProducts[index].quantity} color="primary" />
 
                     <IconButton
-                    color="primary"
+                      color="primary"
                       sx={{ mr: "10px" }}
                       onClick={() => {
                         dispatch(descreaseQuantity(item));
                       }}
                     >
-                      <Remove fontSize="small"/>
+                      <Remove fontSize="small" />
                     </IconButton>
                   </div>
                 ) : (

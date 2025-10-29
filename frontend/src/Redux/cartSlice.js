@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 //use "useSelector" to get the array
 const initialState = {
-  selectedProducts: [
-  ],
+  selectedProducts: [],
+  selectedProductsID: [],
 };
 
 export const counterSlice = createSlice({
@@ -11,37 +11,36 @@ export const counterSlice = createSlice({
   // action.payload = القيمة التي بين الأقواس
   reducers: {
     addToCart: (state, action) => {
-      const productWithQuantity = { ...action.payload, "quantity": 1 };
+      const productWithQuantity = { ...action.payload, quantity: 1 };
       state.selectedProducts.push(productWithQuantity);
       console.log("done");
       //action.payload = proudect from API
+      state.selectedProductsID.push(action.payload.id)
+
     },
     increaseQuantity: (state, action) => {
       const increaseProduct = state.selectedProducts.find((item) => {
-        return item.id === action.payload.id
+        return item.id === action.payload.id;
       });
-      increaseProduct.quantity += 1
+      increaseProduct.quantity += 1;
     },
     descreaseQuantity: (state, action) => {
-    
-        const increaseProduct = state.selectedProducts.find((item) => {
-        return item.id === action.payload.id
+      const increaseProduct = state.selectedProducts.find((item) => {
+        return item.id === action.payload.id;
       });
-      increaseProduct.quantity -= 1
-        if(increaseProduct.quantity === 0){
-          const newArray = state.selectedProducts.filter((item) => {
-              return item.id !== action.payload.id
-          }
-          )
-        state.selectedProducts = newArray
-        }
+      increaseProduct.quantity -= 1;
+      if (increaseProduct.quantity === 0) {
+        const newArray = state.selectedProducts.filter((item) => {
+          return item.id !== action.payload.id;
+        });
+        state.selectedProducts = newArray;
+      }
     },
     deleteProduct: (state, action) => {
       const newArray = state.selectedProducts.filter((item) => {
-              return item.id !== action.payload.id
-          }
-          )
-        state.selectedProducts = newArray
+        return item.id !== action.payload.id;
+      });
+      state.selectedProducts = newArray;
     },
   },
 });
