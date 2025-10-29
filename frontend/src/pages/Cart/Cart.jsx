@@ -46,7 +46,7 @@ console.log(selectedProducts)
             <Add />
           </IconButton>
 
-          <StyledBadge badgeContent={1} color="secondary" />
+          <StyledBadge badgeContent={item.quantity} color="secondary" />
 
           <IconButton sx={{ color: "#1976d2", mr: "10px" }} onClick={() => {dispatch(descreaseQuantity(item))}}>
             <Remove />
