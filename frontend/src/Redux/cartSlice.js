@@ -21,16 +21,27 @@ export const counterSlice = createSlice({
         return item.id === action.payload.id
       });
       increaseProduct.quantity += 1
-      //action.payload = proudect from user
-      // console.log("done");
     },
     descreaseQuantity: (state, action) => {
-      //action.payload = proudect from user
-      console.log("done");
+    
+        const increaseProduct = state.selectedProducts.find((item) => {
+        return item.id === action.payload.id
+      });
+      increaseProduct.quantity -= 1
+        if(increaseProduct.quantity === 0){
+          const newArray = state.selectedProducts.filter((item) => {
+              return item.id !== action.payload.id
+          }
+          )
+        state.selectedProducts = newArray
+        }
     },
     deleteProduct: (state, action) => {
-      //action.payload = proudect from user
-      console.log("done");
+      const newArray = state.selectedProducts.filter((item) => {
+              return item.id !== action.payload.id
+          }
+          )
+        state.selectedProducts = newArray
     },
   },
 });
