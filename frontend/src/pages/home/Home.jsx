@@ -22,6 +22,7 @@ import {
   increaseQuantity,
 } from "../../Redux/cartSlice";
 import { Add, Remove } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {},
@@ -30,13 +31,20 @@ const Home = () => {
   const dispatch = useDispatch();
   const theme = useTheme();
   // @ts-ignore
-  const { selectedProducts,selectedProductsID } = useSelector((state) => state.carttt);
+  const { selectedProducts, selectedProductsID } = useSelector(
+    // @ts-ignore
+    (state) => state.carttt
+  );
 
   const { data, error, isLoading } = useGetproductsByNameQuery("bulbasaur");
-  if(error){
-    <Box>
-      <Typography>Error</Typography>
-    </Box>
+  console.log(data);
+  const navigate = useNavigate();
+  if (error) {
+    return (
+      <Box>
+        <Typography>Error</Typography>
+      </Box>
+    );
   }
   if (isLoading) {
     return (
@@ -47,13 +55,12 @@ const Home = () => {
   }
   const productQuantity = (itemAPI) => {
     const myProduct = selectedProducts.find((itemUser) => {
-      return itemUser.id === itemAPI.id
-    }
-    )
+      return itemUser.id === itemAPI.id;
+    });
     // return myProduct.quantity
-      return myProduct ? myProduct.quantity : 0;
-  }
-  
+    return myProduct ? myProduct.quantity : 0;
+  };
+
   if (data) {
     return (
       <Stack
@@ -72,6 +79,9 @@ const Home = () => {
                 height="277"
                 image={item.imageLink}
                 alt="Paella dish"
+                onClick={() => {
+                  navigate(`product-details/${item.id}`);
+                }}
               />
               <CardContent>
                 <Typography variant="body2" color="text.secondary">
@@ -82,7 +92,7 @@ const Home = () => {
                 sx={{ justifyContent: "space-between" }}
                 disableSpacing
               >
-                {selectedProductsID.includes(item.id)? (
+                {selectedProductsID.includes(item.id) ? (
                   <div
                     dir="rtl"
                     style={{ display: "flex", alignItems: "center" }}
@@ -97,7 +107,10 @@ const Home = () => {
                       <Add fontSize="small" />
                     </IconButton>
 
-                    <StyledBadge badgeContent={productQuantity(item)} color="primary" />
+                    <StyledBadge
+                      badgeContent={productQuantity(item)}
+                      color="primary"
+                    />
 
                     <IconButton
                       color="primary"
