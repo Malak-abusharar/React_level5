@@ -33,6 +33,11 @@ const Home = () => {
   const { selectedProducts,selectedProductsID } = useSelector((state) => state.carttt);
 
   const { data, error, isLoading } = useGetproductsByNameQuery("bulbasaur");
+  if(error){
+    <Box>
+      <Typography>Error</Typography>
+    </Box>
+  }
   if (isLoading) {
     return (
       <Box sx={{ display: "flex" }}>
@@ -45,7 +50,8 @@ const Home = () => {
       return itemUser.id === itemAPI.id
     }
     )
-    return myProduct.quantity
+    // return myProduct.quantity
+      return myProduct ? myProduct.quantity : 0;
   }
   
   if (data) {
