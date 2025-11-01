@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 //use "useSelector" to get the array
 const initialState = {
-  selectedProducts: [],
-  selectedProductsID: [],
+  selectedProducts: localStorage.getItem("selectedProducts")? JSON.parse(localStorage.getItem("selectedProducts")) : [],
+  selectedProductsID: localStorage.getItem("selectedProductsID")? JSON.parse(localStorage.getItem("selectedProductsID")) : [],
 };
 
 export const counterSlice = createSlice({
@@ -16,6 +16,9 @@ export const counterSlice = createSlice({
       console.log("done");
       //action.payload = proudect from API
       state.selectedProductsID.push(action.payload.id);
+
+      localStorage.setItem("selectedProducts",JSON.stringify(state.selectedProducts))
+      localStorage.setItem("selectedProductsID",JSON.stringify(state.selectedProductsID))
     },
     increaseQuantity: (state, action) => {
       const increaseProduct = state.selectedProducts.find((item) => {
