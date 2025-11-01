@@ -40,6 +40,14 @@ const Home = () => {
       </Box>
     );
   }
+  const productQuantity = (itemAPI) => {
+    const myProduct = selectedProducts.find((itemUser) => {
+      return itemUser.id === itemAPI.id
+    }
+    )
+    return myProduct.quantity
+  }
+  
   if (data) {
     return (
       <Stack
@@ -83,7 +91,7 @@ const Home = () => {
                       <Add fontSize="small" />
                     </IconButton>
 
-                    <StyledBadge badgeContent={selectedProducts[index].quantity} color="primary" />
+                    <StyledBadge badgeContent={productQuantity(item)} color="primary" />
 
                     <IconButton
                       color="primary"

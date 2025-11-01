@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 //use "useSelector" to get the array
 const initialState = {
   selectedProducts: [],
-  selectedProductsID: [1, 2],
+  selectedProductsID: [],
 };
 
 export const counterSlice = createSlice({
