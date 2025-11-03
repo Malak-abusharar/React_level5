@@ -1,7 +1,7 @@
 const products = [
   {
     id: 1,
-    productName: "Cup 1",
+    productName: "t-shirt",
     description:
       "Lorem ipsum, dolor sit amet consectetur adipisicing elite. Sequi, perferendis beatae asperiores.",
     price: 100,
@@ -14,7 +14,7 @@ const products = [
   },
   {
     id: 2,
-    productName: "Cup 2",
+    productName: "t-shirt",
     description:
       "Lorem ipsum, dolor sit amet consectetur adipisicing elite. Sequi, perferendis beatae asperiores.",
     price: 200,
@@ -27,7 +27,7 @@ const products = [
   },
   {
     id: 3,
-    productName: "Cup 3",
+    productName: "t-shirt",
     description:
       "Lorem ipsum, dolor sit amet consectetur adipisicing elite. Sequi, perferendis beatae asperiores.",
     price: 300,
@@ -40,7 +40,7 @@ const products = [
   },
   {
     id: 4,
-    productName: "Cup 4",
+    productName: "t-shirt",
     description:
       "Lorem ipsum, dolor sit amet consectetur adipisicing elite. Sequi, perferendis beatae asperiores.",
     price: 400,
