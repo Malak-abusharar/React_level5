@@ -77,7 +77,7 @@ export default function ProductDetails() {
             </div>
             {/* <Colors colors={data.colors} /> */}
 
-            <p>{data.description}</p>
+            <p style={{fontSize:"18px"}}>{data.description}</p>
 
             <DetailsThumb
               images={data.imageLink}
@@ -116,7 +116,7 @@ export default function ProductDetails() {
                               </div>
                             ) : (
                               <Button
-                                sx={{ textTransform: "capitalize", p: 1, lineHeight: 1.1 }}
+                                sx={{marginTop:"25px", textTransform: "capitalize", p: 1, lineHeight: 1.1 }}
                                 variant="contained"
                                 color="primary"
                                 onClick={() => dispatch(addToCart(data))}
