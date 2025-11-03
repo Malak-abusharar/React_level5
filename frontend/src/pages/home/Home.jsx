@@ -35,7 +35,7 @@ const Home = () => {
     // @ts-ignore
     (state) => state.carttt
   );
-
+// data => all product
   const { data, error, isLoading } = useGetproductsByNameQuery("bulbasaur");
   console.log(data);
   const navigate = useNavigate();
