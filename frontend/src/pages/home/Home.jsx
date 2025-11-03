@@ -21,7 +21,7 @@ import {
   descreaseQuantity,
   increaseQuantity,
 } from "../../Redux/cartSlice";
-import { Add, Remove } from "@mui/icons-material";
+import { Add, Remove, ShoppingCart } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -129,7 +129,7 @@ const Home = () => {
                     color="primary"
                     onClick={() => dispatch(addToCart(item))}
                   >
-                    Add to cart
+                    <ShoppingCart sx={{fontSize:"18px", mr:1}} /> Add to cart
                   </Button>
                 )}
 

@@ -2,10 +2,30 @@ import React, { useRef } from "react";
 import "./ProductDetails.css";
 import { useGetoneProductQuery } from "../../Redux/productsApi";
 import { useParams } from "react-router-dom";
-import { Box, CircularProgress, Typography } from "@mui/material";
+import { Badge, Box, Button, CircularProgress, IconButton, styled, Typography } from "@mui/material";
 import { useState } from "react";
 import DetailsThumb from "./DetailsThumb";
+import { useDispatch, useSelector } from "react-redux";
+import { Add, Remove, ShoppingCart } from "@mui/icons-material";
+import {
+  addToCart,
+  descreaseQuantity,
+  increaseQuantity,
+} from "../../Redux/cartSlice";
+const StyledBadge = styled(Badge)(({ theme }) => ({
+  "& .MuiBadge-badge": {},
+}));
 export default function ProductDetails() {
+    const { selectedProducts, selectedProductsID } = useSelector(
+      // @ts-ignore
+      (state) => state.carttt
+    );
+    const dispatch = useDispatch();
+
+    const productQuantity = (itemAPI) => {
+    const myProduct = selectedProducts.find((itemUser) => itemUser.id === itemAPI.id);
+    return myProduct?.quantity ?? 0;
+  };
   const [index, setindex] = useState(0);
   const myRef = useRef(null);
 
@@ -55,7 +75,7 @@ export default function ProductDetails() {
               <h2>{data.productName}</h2>
               <span>${data.price}</span>
             </div>
-            {/* <Colors colors={item.colors} /> */}
+            {/* <Colors colors={data.colors} /> */}
 
             <p>{data.description}</p>
 
@@ -64,10 +84,50 @@ export default function ProductDetails() {
               tab={handleTab}
               myRef={myRef}
             />
-            <button className="cart">Add to cart</button>
+            {/* <button className="cart">Add to cart</button> */}
+            {selectedProductsID.includes(data.id) ? (
+                              <div
+                                style={{ display: "flex", alignItems: "center" }}
+                              >
+                              
+                <IconButton
+                                  color="primary"
+                                  sx={{ mr: "10px" }}
+                                  onClick={() => {
+                                    dispatch(descreaseQuantity(data));
+                                  }}
+                                >
+                                  <Remove fontSize="small" />
+                                </IconButton>
+                                <StyledBadge
+                                  badgeContent={productQuantity(data)}
+                                  color="primary"
+                                />
+            
+                                <IconButton
+                                  color="primary"
+                                  sx={{ ml: "10px" }}
+                                  onClick={() => {
+                                    dispatch(increaseQuantity(data));
+                                  }}
+                                >
+                                  <Add fontSize="small" />
+                                </IconButton>
+                              </div>
+                            ) : (
+                              <Button
+                                sx={{ textTransform: "capitalize", p: 1, lineHeight: 1.1 }}
+                                variant="contained"
+                                color="primary"
+                                onClick={() => dispatch(addToCart(data))}
+                              >
+                                <ShoppingCart sx={{fontSize:"18px", mr:1}} /> Add to cart
+                              </Button>
+                            )}
           </div>
         </div>
       </div>
     );
   }
 }
+
